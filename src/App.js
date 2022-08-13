@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './Components/header';
+import { Todo } from './Components/todo';
+import { useState } from 'react';
 
 function App() {
+
+  const onDelete = (todo) => {
+    setTodo(myTodo.filter((ele) => {
+      return ele !== todo
+    }))
+  }
+
+  const addTodo = (todo) => {
+    let sNo
+    if (myTodo.length === 0) {
+      sNo = 1;
+    } else {
+      sNo = myTodo[myTodo.length - 1].sNo + 1
+    }
+    const newTodo = { sNo: sNo, title: todo.title, task: todo.task }
+    setTodo([...myTodo, newTodo])
+  }
+  const [myTodo, setTodo] = useState([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Todo todo={myTodo} onDelete={onDelete} addTodo={addTodo} />
+    </>
   );
 }
 
