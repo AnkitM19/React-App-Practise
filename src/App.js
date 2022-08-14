@@ -1,9 +1,22 @@
 import './App.css';
-import Header from './Components/header';
+import { Header } from './Components/header';
 import { Todo } from './Components/todo';
+import { Counter } from './Components/counter';
 import { useState } from 'react';
 
 function App() {
+
+  let [counterComp, setCounter] = useState(false)
+
+  const [myTodo, setTodo] = useState([])
+
+  const activateComponent = (element) => {
+    if (element === true) {
+      setCounter(counterComp = true)
+    } else {
+      setCounter(counterComp = false)
+    }
+  }
 
   const onDelete = (todo) => {
     setTodo(myTodo.filter((ele) => {
@@ -21,11 +34,13 @@ function App() {
     const newTodo = { sNo: sNo, title: todo.title, task: todo.task }
     setTodo([...myTodo, newTodo])
   }
-  const [myTodo, setTodo] = useState([])
   return (
     <>
-      <Header />
+      <Header activateComponent={activateComponent} />
+      { counterComp === true ?
+      <Counter />:
       <Todo todo={myTodo} onDelete={onDelete} addTodo={addTodo} />
+      }
     </>
   );
 }
